@@ -202,6 +202,7 @@ function scrollToCardTop(card) {
 	var containerHeight = $("body").height();
 	var cardHeight = card.height();
 	var offset = 0;
+	console.log("offset");
 	if (containerHeight >= cardHeight)
 		offset = (containerHeight - cardHeight) / 2;
 	else

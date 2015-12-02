@@ -1,5 +1,8 @@
 body {
 	font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif; 
+	background-color: #fff; 
+	background-image: linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px), linear-gradient(#eee .1em, transparent .1em);
+	background-size: 100% 1.2em;
 }
 
 #myCards {
@@ -7,11 +10,10 @@ body {
 }
 
 #main {
-	background-color: #fff; 
-	background-image: 
-	linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
-	linear-gradient(#eee .1em, transparent .1em);
-	background-size: 100% 1.2em;
+	padding-top: 0;
+	/*background-color: #fff; 
+	background-image: linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px), linear-gradient(#eee .1em, transparent .1em);
+	background-size: 100% 1.2em;*/
 }
 
 #loadingBox {
@@ -38,8 +40,11 @@ body {
 
 .mynav {
 	background: rgb(255, 134, 106);
-	margin-bottom: 14px;
-	display: flex;
+	padding-bottom: 0 !important;
+}
+
+.mynav .ui.column{
+	display: flex !important;
 	text-align: center;
 	justify-content: center;
 	align-items: center;

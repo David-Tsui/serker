@@ -10,32 +10,37 @@
     <link rel="shortcut icon" href="images/ico/user.png">
   </head>
   <body>
-    <div class="ui grid mynav">
-      <div class="ui four wide column">
-        <div class="ui large image">
-          <img src="images/title.png" alt="image not found">
+    <div class="ui stackable grid">
+      <div class="row mynav">
+        <div class="ui four wide column">
+          <div class="ui basic segment">
+            <div class="ui image">
+              <img src="images/title_fluid.png" alt="image not found">
+            </div>
+          </div>  
+        </div>
+        <div class="ui twelve wide column">
+          <div class="ui basic segment">
+            <div class="ui icon input">
+              <input type="text" placeholder="找尋屬於你的卡片...">
+              <i class="search icon"></i>
+            </div>
+          </div>       
+        </div>
+      </div>    
+      <div class="row" id="loadingBox">
+        <div class="ui image">
+          <img src="images/loading.gif" alt="">
         </div>
       </div>
-      <div class="ui twelve wide column">
-        <div class="ui transparent icon input">
-          <input type="text" placeholder="Search...">
-          <i class="search icon"></i>
+      <div class="row" id="main" style="display: none">
+        <div class="ui four wide column" id="leftSide"></div>
+        <div class="ui twelve wide column" id="rightSide">
+          <div class="ui four column stackable centered grid" id="myCards"></div>
         </div>
       </div>
-      
     </div>
-    <div id="loadingBox">
-      <div class="ui image">
-        <img src="images/loading.gif" alt="">
-      </div>
-    </div>
-    <div class="ui stackable grid" id="main" style="display: none">
-      <div class="ui four wide column" id="leftSide"></div>
-      <div class="ui twelve wide column" id="rightSide">
-        <div class="ui four column stackable centered grid" id="myCards"></div>
-      </div>
-    </div>
-
+    
     <div class="ui blurring centered card" id="card-template" style="display: none">
       <div class="ui dimmer"></div>
       <div class="image">
