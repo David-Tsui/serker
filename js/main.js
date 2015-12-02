@@ -1,4 +1,9 @@
 $(document).ready(function() {
+	var loading_height = $("body").height() - $(".mynav").height();
+	$("#loadingBox").css({
+		height: loading_height, 
+		background: "-webkit-linear-gradient(68deg, rgb(87, 23, 235) 0%, rgb(0, 208, 173) 97%)"
+	});
 	getItem();
 });
 
@@ -37,6 +42,9 @@ function getItem() {
 			});
 			card.find('.description .ui.segment').html(obj.info);
 			column.append(card);
+			card.click(function() {
+				$(this).transition('bounce');
+			});
 			if (index % columns == (columns - 1))
 				row = $('<div class="row"></div>');
 		})	

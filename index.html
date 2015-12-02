@@ -11,26 +11,26 @@
   </head>
   <body>
     <div class="ui stackable grid">
-      <div class="row mynav">
-        <div class="ui four wide column">
-          <div class="ui basic segment">
-            <div class="ui image">
-              <img src="images/title_fluid.png" alt="image not found">
-            </div>
-          </div>  
+      <div class="equal widths row mynav">
+        <div class="column"></div>
+        <div class="column">
+          <div class="ui header" id="nav-title">社課小幫手</div>
         </div>
-        <div class="ui twelve wide column">
+        <div class="column">
           <div class="ui basic segment">
             <div class="ui icon input">
-              <input type="text" placeholder="找尋屬於你的卡片...">
+              <input type="text" placeholder="找尋屬於你的卡片..." style="box-shadow: 3px 5px 2px 1px rgba(0,0,0,0.2) !important; border-radius: 20px;">
               <i class="search icon"></i>
             </div>
-          </div>       
+          </div>     
         </div>
       </div>    
       <div class="row" id="loadingBox">
-        <div class="ui image">
-          <img src="images/loading.gif" alt="">
+        <div class="sk-folding-cube">
+          <div class="sk-cube1 sk-cube"></div>
+          <div class="sk-cube2 sk-cube"></div>
+          <div class="sk-cube4 sk-cube"></div>
+          <div class="sk-cube3 sk-cube"></div>
         </div>
       </div>
       <div class="row" id="main" style="display: none">
