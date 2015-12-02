@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>社課小幫手</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="semantic/dist/semantic.min.css">
+    <link rel="stylesheet" href="css/style.css"> 
+    <link rel="shortcut icon" href="images/ico/user.png">
+  </head>
+  <body>
+    <div class="ui grid mynav">
+      <div class="ui four wide column">
+        <div class="ui large image">
+          <img src="images/title.png" alt="image not found">
+        </div>
+      </div>
+      <div class="ui twelve wide column">
+        <div class="ui transparent icon input">
+          <input type="text" placeholder="Search...">
+          <i class="search icon"></i>
+        </div>
+      </div>
+      
+    </div>
+    <div id="loadingBox">
+      <div class="ui image">
+        <img src="images/loading.gif" alt="">
+      </div>
+    </div>
+    <div class="ui stackable grid" id="main" style="display: none">
+      <div class="ui four wide column" id="leftSide"></div>
+      <div class="ui twelve wide column" id="rightSide">
+        <div class="ui four column stackable centered grid" id="myCards"></div>
+      </div>
+    </div>
+
+    <div class="ui blurring centered card" id="card-template" style="display: none">
+      <div class="ui dimmer"></div>
+      <div class="image">
+        <img src="" alt="image not found">
+      </div>
+      <div class="content" style="position: relative">
+        <a href="javascript: noLinkHandler();" target="_blank" class="githubHref" style="color: black">
+          <i class="large github icon"></i>
+        </a>
+        <i class="large edit icon editIcon"></i>
+        <span class="cardPerson">David</span>
+        <div class="meta linkSpan small">
+          <span>我的作品</span>
+        </div>
+        <div class="ui divider"></div>
+        <div class="description">
+          <p>關於我</p>
+          <div class="ui segment" style="text-align: left; word-wrap: break-word;">123</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui basic segment reportBox-first" id="tmp-reportBox-first" style="height: 100%; display: none">
+      <div class="ui form reportForm segment">
+        <div class="ui header">身分驗證</div>
+        <div class="ui divider"></div>
+        <div class="ui disabled field">
+          <label>姓名</label>
+          <input type="text" disabled="" class="assignName" name="assignName">
+        </div>
+        <div class="ui required field">
+          <label><i class="mail outline icon"></i>Email</label>
+          <input type="text" placeholder="請輸入email以驗證..." name="email">
+        </div>
+        <div class="ui buttons">
+          <button class="ui button cancelEdit1">取消</button>
+          <div class="or"></div>
+          <button class="ui positive button checkEmail">驗證</button>
+        </div>
+      </div>   
+    </div>
+
+    <div class="ui basic segment reportBox-second" id="tmp-reportBox-second" style="height: 100%; display: none">
+      <div class="ui form reportForm segment">
+        <div class="ui header">編輯資料</div>
+        <span style="color: red"><i class="circle info icon"></i>未修改項目請留白</span>
+        <div class="ui divider"></div>
+        <div class="ui required field">
+          <label><i class="photo icon"></i>個人頭像</label>
+          <input type="text" placeholder="請輸入圖片網址..." name="avatar">
+        </div>
+        <div class="ui required field">
+          <label><i class="github icon"></i>Github 網址</label>
+          <input type="text" placeholder="請輸入Github網址..." name="github">
+        </div>
+        <div class="ui required field">
+          <label><i class="diamond icon"></i>Demopage 網址</label>
+          <input type="text" placeholder="請輸入作品網址..." name="demoUrl">
+        </div>
+        <div class="ui field">
+          <label><i class="write icon"></i>自我介紹</label>
+          <textarea name="introduce" placeholder="介紹一下自己吧" rows="2"></textarea>
+        </div>
+        <div class="ui buttons">
+          <button class="ui button cancelEdit2">取消</button>
+          <div class="or"></div>
+          <button class="ui positive button" id="submitInfo">修改</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="ui basic segment" id="successMsg" style="height: 100%; display: none">
+      <div class="ui green message">
+        <div class="header"></div>
+        <div class="ui divider"></div>
+        <div class="content"></div>
+      </div>
+    </div>
+    
+    <div class="ui basic segment" id="errorMsg" style="height: 100%; display: none">
+      <div class="ui red message">
+        <div class="header"></div>
+        <div class="ui divider"></div>
+        <div class="content"></div>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> 
+    <script src="semantic/dist/semantic.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

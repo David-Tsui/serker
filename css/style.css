@@ -1,0 +1,111 @@
+body {
+	font-family: Arial, "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", sans-serif; 
+}
+
+#myCards {
+	padding-top: 10px;
+}
+
+#main {
+	background-color: #fff; 
+	background-image: 
+	linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
+	linear-gradient(#eee .1em, transparent .1em);
+	background-size: 100% 1.2em;
+}
+
+#loadingBox {
+	height: 450px;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+}
+
+#leftSide {
+	width: 100%;
+	/*background: url(http://i.imgur.com/8ugJ0jn.gif);*/
+	background: url(http://i.imgur.com/CuOiAx7.gif);
+	/*background: url(http://i.imgur.com/czqHSF5.gif);*/
+	background-repeat: no-repeat repeat;
+	background-position: top center;
+	background-size: contain;
+}
+
+#rightSide {
+	padding-right: 26px;
+}
+
+.mynav {
+	background: rgb(255, 134, 106);
+	margin-bottom: 14px;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+}
+
+.small {
+	font-size: 1rem;
+	font-weight: bold;
+}
+
+.cardPerson {
+	font-size: 1.5rem;
+	font-weight: bolder;
+	line-height: 1.5;
+}
+
+.cardPerson:hover {
+	background-color: #FBFFEC;
+  border-color: #F46E6E;
+  border-width: 2px;
+  border-style: dashed;
+  border-radius: 12px;
+  padding: 3px;
+}
+
+.linkSpan {
+	cursor: pointer;
+}
+
+.linkSpan:hover.linkSpan:hover.linkSpan:hover {
+	color: #837FE1;
+}
+
+.editIcon {
+	cursor: pointer;
+	position: absolute;
+	right: 4px;
+	top: 18px;
+}
+
+.editIcon:hover {
+	color: #FF6565;
+}
+
+.githubHref {
+	position: absolute;
+	right: 30px;
+	top: 18px;
+}
+
+.githubHref > .icon:hover {
+	color: #74ED8A;
+}
+
+#myCards .ui.segment, #myCards .ui.green.message, #myCards .ui.red.message {
+	margin-top: 0;
+}
+
+@media only screen and (max-width: 768px) {
+  #leftSide {
+  	display: none;
+  }
+  #rightSide {
+  	padding-right: 0;
+  }
+}
+
+
+
