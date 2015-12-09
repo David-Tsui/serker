@@ -14,7 +14,7 @@
       <div class="equal widths row mynav">
         <div class="column"></div>
         <div class="column">
-          <div class="ui header" id="nav-title">社課小幫手</div>
+          <div class="ui header" id="nav-title" style="margin-top: 2px">社課小幫手</div>
         </div>
         <div class="column">
           <div class="ui basic segment">
@@ -44,7 +44,7 @@
     <div class="ui blurring centered card" id="card-template" style="display: none">
       <div class="ui dimmer"></div>
       <div class="image">
-        <img src="" alt="image not found">
+        <img src="" alt="image not found" onerror="this.onerror=null;this.src='images/image_not_found.png'">
       </div>
       <div class="content" style="position: relative">
         <a href="javascript: noLinkHandler();" target="_blank" class="githubHref" style="color: black">
@@ -84,9 +84,8 @@
     </div>
 
     <div class="ui basic segment reportBox-second" id="tmp-reportBox-second" style="height: 100%; display: none">
-      <div class="ui form reportForm segment">
+      <div class="ui form segment reportForm">
         <div class="ui header">編輯資料</div>
-        <span style="color: red"><i class="circle info icon"></i>未修改項目請留白</span>
         <div class="ui divider"></div>
         <div class="ui required field">
           <label><i class="photo icon"></i>個人頭像</label>
@@ -107,8 +106,9 @@
         <div class="ui buttons">
           <button class="ui button cancelEdit2">取消</button>
           <div class="or"></div>
-          <button class="ui positive button" id="submitInfo">修改</button>
+          <button class="ui green submit button" id="submitInfo">修改</button>
         </div>
+        <div class="ui error message"></div>
       </div>
     </div>
     
@@ -130,6 +130,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> 
     <script src="semantic/dist/semantic.js"></script>
+    <script src="lib/animatescroll.min.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>

@@ -7,10 +7,15 @@ $(document).ready(function() {
 	getItem();
 });
 
-function getItem() {
-	var api_url = "https://script.google.com/macros/s/AKfycby41CZbvhT0jO1Z0ya_u5a5hM1J01uiaF0v4UFkG6cnnFoJH5o/exec";
+var api_url = "https://script.google.com/macros/s/AKfycbwO3ui5gANjzYvzjZTYlLT_wxjHXl5K8YrUHuCmJTYPJHkFP9cq/exec";
 
+function getItem() {
+	var tobj = {
+		姓名: "崔家華",
+		信箱: "st880221@gmail.com"
+	};
 	$.get(api_url, "get", function(ret) {
+		console.log("-get-");
 		console.log(ret);
 		var data = ret.output;
 		var i = 0, columns = 4;
@@ -30,8 +35,8 @@ function getItem() {
 			}
 			row.append(column);
 			var card = $("#card-template").clone().attr("id", id).css('display', 'block');
-			card.find('.image img').attr("src", obj.picture);
-			card.find('.cardPerson').html(obj.name);
+			card.find('.image img').attr("src", obj.picture).click(function() { card.transition('bounce'); });
+			card.find('.cardPerson').html(obj.name).mouseenter(function() { $(this).transition('tada'); });
 			if (obj.github != "")
 				card.find(".githubHref").attr("href", obj.github);
 			card.find('.linkSpan').click(function() { 
@@ -42,9 +47,9 @@ function getItem() {
 			});
 			card.find('.description .ui.segment').html(obj.info);
 			column.append(card);
-			card.click(function() {
+			/*card.click(function() {
 				$(this).transition('bounce');
-			});
+			});*/
 			if (index % columns == (columns - 1))
 				row = $('<div class="row"></div>');
 		})	
@@ -101,7 +106,8 @@ function checkInfo() {
 			alignItems: "center",
 			justifyContent: "center"
 		};
-		formHandle(formData).done(function(response){
+		submitForm(formData).done(function(response){
+			var output_obj = response.output;
 			if (response.result == "error") {	// fail
 				console.log("error");
 				loader.hide(function() {
@@ -114,15 +120,16 @@ function checkInfo() {
 				return;
 			}
 			var second_formBox = $("#tmp-reportBox-second").clone().removeAttr("id").appendTo(dimmer);
+			var second_form = second_formBox.find(".reportForm");
 			var temp_dimmer = dimmer;
 			loader.hide(function() { 
 				$(this).remove();
 				var successMsg = genSuccessMsg("認證成功", "即將跳轉編輯頁面");
 				successMsg.appendTo(dimmer);
 				setTimeout(function() {
-					successMsg.hide(function() {
+					successMsg.hide(function() {								
 						second_formBox.css(css_obj).show();
-						handleEditPanel(formData["姓名"], formData["信箱"]);
+						handleEditPanel(second_form, output_obj, formData["姓名"], formData["信箱"]);
 					}); 
 				}, 1200);
 			});   
@@ -131,20 +138,17 @@ function checkInfo() {
 	});
 }
 
-function handleEditPanel(name, email) {
-	$(".cancelEdit2").click(function(e) {
-		var eventClass = e.target;
-		var parentCard = $(eventClass).parents(".ui.card");
-		var dimmer = parentCard.find(".ui.dimmer");
-		parentCard.dimmer('hide');  
-		dimmer.html("");
-	});
-	$("#submitInfo").click(function(e) {
-		var eventClass = e.target;
+function handleEditPanel(form, preData, name, email) {
+	setFieldValue(form, 'avatar', preData['Avatar']);
+	setFieldValue(form, 'github', preData['Github']);
+	setFieldValue(form, 'demoUrl', preData['Demopage']);
+	setFieldValue(form, 'introduce', preData['Info']);
+	var mySubmit = function(e) {
+		var eventClass = $(e.target);
 		var parentCard = $(eventClass).parents(".ui.card");
 		var dimmer = parentCard.find(".ui.dimmer");
 		var formBox = $(eventClass).parents(".reportBox-second");
-		var form = $(eventClass).parents(".reportForm");
+		var form = $(eventClass);
 		var formData = {
 			姓名: name,
 			信箱: email,
@@ -153,9 +157,10 @@ function handleEditPanel(name, email) {
 			Demopage: getFieldValue(form, 'demoUrl'),
 			Info: getFieldValue(form, 'introduce')
 		};
+		
 		var loader = $('<div class="ui text loader">資料傳送中</div>');
 		formBox.hide(function() { dimmer.append(loader); });
-		formHandle(formData).done(function(response){
+		submitForm(formData).done(function(response){
 			if(response == "error") {
 				$(this).remove();				
 				var errorMsg = genErrorMsg("傳送失敗", "請稍後再試").appendTo(dimmer);
@@ -176,14 +181,55 @@ function handleEditPanel(name, email) {
 						parentCard.dimmer('hide');  
 						dimmer.html("");
 					}); 
-				}, 1200);			
-			})		
+				}, 1200);		
+			});	
 		});
+	};
+
+	form.form({
+    on: 'blur',
+    fields: {
+      avatar: {
+        identifier : 'avatar',
+        rules: [
+          {
+            type   : 'regExp[/(?:https?\:\/\/)?(?:www\.)?[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?\.(?:jpe?g|png|gif|gifv)/]',
+            prompt : '請輸入正確圖源網址'
+          }
+        ]
+      },
+      github: {
+        identifier : 'github',
+        rules: [
+          {
+            type   : 'regExp[/((?:https\:\/\/)?(?:github\.com\/))\\w+/]',
+            prompt : '請輸入正確Github個人主頁網址'
+          }
+        ]
+      },
+      demoUrl: {
+        identifier : 'demoUrl',
+        rules: [
+          {
+            type   : 'regExp[/(?:https?:\/\/)?(?:www\.)?[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/]',
+            prompt : '請輸入正確網址'
+          }
+        ]
+      }
+    },
+    onSuccess: mySubmit
+	});
+	$(".cancelEdit2").click(function(e) {
+		var eventClass = e.target;
+		var parentCard = $(eventClass).parents(".ui.card");
+		var dimmer = parentCard.find(".ui.dimmer");
+		parentCard.dimmer('hide');  
+		dimmer.html("");
 	});
 }
 
-function formHandle(data) {
-	var api_url = "https://script.google.com/macros/s/AKfycby41CZbvhT0jO1Z0ya_u5a5hM1J01uiaF0v4UFkG6cnnFoJH5o/exec";
+function submitForm(data) {
+	console.log("-post-");
 	return $.ajax({
 		url: api_url,
 		type: 'POST',
@@ -199,33 +245,39 @@ function getFieldValue(myform, fieldName) {
 	var text = myform.form('get value', fieldName);
 	if (text != "")
 		return text;
-	return "";
+}
+
+function setFieldValue(myform, fieldName, value) {
+	myform.form('set value', fieldName, value);
 }
 
 function noLinkHandler() {
-	alert("這個使用者還沒更新資料!");
+	alert("連結有誤或不存在!");
 }
 
-function scrollToCardTop(card) {
-	var containerHeight = $("body").height();
-	var cardHeight = card.height();
-	var offset = 0;
-	console.log("offset");
-	if (containerHeight >= cardHeight)
-		offset = (containerHeight - cardHeight) / 2;
-	else
-		offset = ((cardHeight - containerHeight) / 2) * (-1);
-	$("body").animate({scrollTop: card.offset().top - offset}, 400);
+function handleFormData(form, data) {
+
 }
 
 function modifyProfile(card, obj) {
 	card.find('.image img').attr("src", obj.Avatar);
 	card.find('.cardPerson').html(obj.name);
 	if (obj.Github != "") card.find(".githubHref").attr("href", obj.Github);
-	card.find('.linkSpan').click(function() { 
+	card.find('.linkSpan').off("click").click(function() { 
 		window.open(obj.Demopage); 
 	});
 	card.find('.description .ui.segment').html(obj.Info);
+}
+
+function scrollToCardTop(card) {
+	var containerHeight = $("body").height();
+	var cardHeight = card.height();
+	var offset = 0;
+	if (containerHeight >= cardHeight)
+		offset = (containerHeight - cardHeight) / 2;
+	else
+		offset = ((cardHeight - containerHeight) / 2) * (-1);
+	card.animatescroll({padding: offset});
 }
 
 function genSuccessMsg(header, content) {
