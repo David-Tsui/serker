@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>社課範本</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> 
+	<script src="http://cdn.bootcss.com/semantic-ui/2.1.6/semantic.min.js"></script>
+	<link href="http://cdn.bootcss.com/semantic-ui/2.1.6/semantic.min.css" rel="stylesheet">
+	<script>
+		$(document).ready(function() {
+			var nav_height = $(".mynav").height();
+			$("body").css("background-position", "0 " + (nav_height - 1) + "px");
+			initialDropdown();
+			$("#getBtn").click(function() {
+				var api_url_items = "https://script.google.com/macros/s/AKfycbytJWyYoReSCDhpggy7A3rPKkKYOE5Tp9UnSxwu72JkHxIqYDra/exec",
+				    api_url_record = "https://script.google.com/macros/s/AKfycbwYlFKqdx90mLwB1jnJJxvHUHAPlmM7gOGls0XWNkIbAZ_JAFY/exec";
+				var sheet_obj = {SHEET_NAME: "出口"};
+				$.get(api_url_items, sheet_obj, function(response) {
+					console.log("-items-");
+					console.log(response);
+				});
+				$.get(api_url_record, "get", function(response) {
+					console.log("-record-");
+					console.log(response);
+				});
+			})
+		});
+
+		function initialDropdown() {
+			var api_url_items = "https://script.google.com/macros/s/AKfycbytJWyYoReSCDhpggy7A3rPKkKYOE5Tp9UnSxwu72JkHxIqYDra/exec",
+			    api_url_record = "https://script.google.com/macros/s/AKfycbwYlFKqdx90mLwB1jnJJxvHUHAPlmM7gOGls0XWNkIbAZ_JAFY/exec";
+			var sheet_obj1 = {SHEET_NAME: "出口"}, sheet_obj2 = {SHEET_NAME: "進口"};
+			$.when($.get(api_url_items, sheet_obj1), $.get(api_url_items, sheet_obj2), $.get(api_url_record, "get"))
+				.done(function(response1, response2, response3) {
+				console.log("-items-");
+				console.log(response1[0].output);
+				console.log(response2[0].output);
+				console.log("-record-");
+				console.log(response3[0].output);
+				var export_arr = response1[0].output,
+				    import_arr = response2[0].output,
+				    record_arr = response3[0].output;
+				export_arr.forEach(function(item) {
+					var option = '<option value="' + item["商品名稱"] + '">' + item["商品名稱"] + '</option>';
+					$("#export").append(option);				
+				})
+				import_arr.forEach(function(item) {
+					var option = '<option value="' + item["商品名稱"] + '">' + item["商品名稱"] + '</option>';
+					$("#import").append(option);				
+				})
+				
+				record_arr.forEach(function(record_obj) {
+					var temp = "<tr>";
+					for(var key in record_obj) {
+						temp += '<td>' + record_obj[key] + '</td>';
+					}
+					temp += '</tr>';
+					$(temp).appendTo("#table-content");
+				})
+				$(".ui.dropdown").dropdown();
+			});
+
+			/*console.log("-items-");
+			$.get(api_url_items, sheet_obj1, function(response) {
+				console.log(response.output);
+				$(".ui.dropdown").dropdown();
+			});
+
+			$.get(api_url_items, sheet_obj2, function(response) {
+				console.log(response.output);
+				$(".ui.dropdown").dropdown();
+			})*/
+		}
+	</script>
+
+	<style>
+		.mynav {
+			background: -webkit-linear-gradient(93deg, #00d0ad 0%, #5717EB 100%);
+			padding-bottom: 0 !important;
+		}
+		.mynav .column, .main .column {
+			display: flex !important;
+			text-align: center;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+		}
+		#nav-title {
+			color: #FFF;
+			font-size: 3rem;
+			text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+		}
+		body {
+			font-family: '微軟正黑體';
+			background: -webkit-linear-gradient(68deg, rgb(87, 23, 235) 0%, rgb(0, 208, 173) 97%);
+			background-position: 0 0;
+		}
+	</style>
+</head>
+<body>
+	<div class="ui stackable grid">
+		<div class="equal widths row mynav">
+			<div class="column"></div>
+			<div class="column">
+				<div class="ui header" id="nav-title" style="padding-top: 8px;">簡易出進貨</div>
+			</div>
+			<div class="column"></div>
+		</div>    
+
+		<div class="row main">
+			<div class="ui six wide column">
+				<div class="ui form segment" style="width: 75%">
+					<div class="ui header">記錄表單</div>
+					<div class="ui divider"></div>
+					<div class="field">
+						<label>日期</label>
+          	<input type="text" placeholder="請輸入日期..." class="assignName" name="date">
+					</div>
+					<div class="field">
+						<label>進口</label>
+						<select name="skills" multiple="" class="ui fluid dropdown" name="import" id="import">
+						  <option value="">請選擇貨品</option>
+						</select>
+					</div>
+					<div class="field">
+						<label>出口</label>
+						<select name="skills" multiple="" class="ui fluid dropdown" name="export" id="export">
+						  <option value="">請選擇貨品</option>
+						</select>
+					</div>
+					<div class="ui submit button">發送</div>
+				</div>
+			</div>
+			<div class="ui ten wide column">
+				<div class="myTable" style="width: 90%">
+					<table class="ui celled striped table">
+					  <thead>
+					    <tr>
+						    <th>日期</th>
+						    <th>進口</th>
+						    <th>支出</th>
+						    <th>出口</th>
+						    <th>收入</th>
+						    <th>總計</th>					
+					  	</tr>
+					  </thead>
+					  <tbody id="table-content"></tbody>
+					</table>
+				</div>
+				<div class="ui button" id="getBtn">test</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

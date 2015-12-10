@@ -37,8 +37,7 @@ function getItem() {
 			var card = $("#card-template").clone().attr("id", id).css('display', 'block');
 			card.find('.image img').attr("src", obj.picture).click(function() { card.transition('bounce'); });
 			card.find('.cardPerson').html(obj.name).mouseenter(function() { $(this).transition('tada'); });
-			if (obj.github != "")
-				card.find(".githubHref").attr("href", obj.github);
+			if (obj.github != "") card.find(".githubHref").attr("href", obj.github);
 			card.find('.linkSpan').click(function() { 
 				if (obj.demopage != "")
 					window.open(obj.demopage); 
@@ -47,9 +46,6 @@ function getItem() {
 			});
 			card.find('.description .ui.segment').html(obj.info);
 			column.append(card);
-			/*card.click(function() {
-				$(this).transition('bounce');
-			});*/
 			if (index % columns == (columns - 1))
 				row = $('<div class="row"></div>');
 		})	
